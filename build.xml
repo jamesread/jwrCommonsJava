@@ -1,0 +1,46 @@
+<project name = "jwrCommonsJava" default = "make-release"> 
+	<import optional = "no" file = "../jwrCommonsIndep/build.xml" />
+	
+   <target name = "clean"> 
+        <delete failonerror = "false" includeemptydirs = "yes">
+            <fileset dir = "bin" />  
+            <fileset dir = "dist" />
+            <fileset dir = "pkg" /> 
+        </delete> 
+    </target> 
+    
+    <target name = "framework">
+        <mkdir dir = "bin" />
+        <mkdir dir = "dist" />
+        <mkdir dir = "pkg" />
+        <mkdir dir = "src" /> 
+        <touch file = "project.properties" />
+    </target>
+
+	    
+	<target name = "make-release" depends = "clean, framework"> 
+		<javac srcdir = "src/" destdir = "bin/" debug = "true">
+			<exclude name = "src/unitTests/Types.java" /> 	
+		</javac>   
+		
+		<jar basedir = "bin/" file = "pkg/jwrCommonsJava-${version}.jar" /> 
+		<copy file="pkg/jwrCommonsJava-${version}.jar" tofile="pkg/jwrCommonsJava.jar" /> 
+	</target> 
+	
+	<target name = "java-tests">
+		<javac srcdir="src/tests/" destdir="bin/tests/" /> 
+		<java dir="bin/tests/" classname="ConfigurationTest" />
+	</target> 
+	 
+	<target name = "javadoc">
+		<delete dir="docs/javadoc/" failonerror="false" />
+		<mkdir dir = "docs/javadoc" />
+		
+		<javadoc sourcepath="src/" packagenames="jwrCommonsJava" nonavbar="false" notree="true" noindex="true" nohelp="true" destdir="docs/javadoc" />
+		<zip basedir="docs/javadoc/" destfile="docs/javadoc.zip" />
+		 
+		<delete dir="docs/javadoc/" failonerror="false" />   
+	</target> 
+</project>   
+ 
+ 
