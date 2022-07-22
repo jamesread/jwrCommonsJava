@@ -26,6 +26,7 @@ public class ComponentDirectoryChooser extends ComponentPathChooser {
 		this.jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		this.jfc.setDialogTitle(this.title);
 		this.jfc.setBounds(100, 100, 320, 240);
+		this.jfc.setCurrentDirectory(new File(this.getInitialValue()));
 		this.jfc.showOpenDialog(this);
 
 		if (this.jfc.getSelectedFile() != null) {
